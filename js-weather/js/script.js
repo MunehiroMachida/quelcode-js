@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     // id、weatherが変わったら↓
-    document.getElementById('weather').addEventListener('change', function () {
-        const CityName = this.value;
+    document.getElementById('weather').addEventListener('change', (event) => {
+        const CityName = event.target.value;
         const requestUrl = WeatherMapApi + CityName + ApiLangJa + AppIdUrl;
         xhr.open('GET', requestUrl, true);
         xhr.send();
