@@ -1,5 +1,8 @@
 let xhr = new XMLHttpRequest();
-let AppId = '4b5774e9f3d2a07b84f0f2f88e486224';
+
+let WeatherMapApi = 'http://api.openweathermap.org/data/2.5/weather?q=';
+let ApiLangJa = '&units=metric&lang=ja';
+let AppIdUrl = '&appid=4b5774e9f3d2a07b84f0f2f88e486224';
 
 const todaysWeather = (response) => {
     let obj = JSON.parse(response);
@@ -10,7 +13,7 @@ const todaysWeather = (response) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     //デフォルトロンドン
-    let LondonUrl = "http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&lang=ja&appid=4b5774e9f3d2a07b84f0f2f88e486224";
+    let LondonUrl = WeatherMapApi + "London" + ApiLangJa + AppIdUrl;
     xhr.open('GET', LondonUrl, true);
     xhr.send();
     //通信ステータスが変わったら実行される関数
@@ -23,8 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // id、weatherが変わったら↓
     document.getElementById('weather').addEventListener('change', function () {
         let CityName = this.value;
-        let requestUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + CityName + "&units=metric&lang=ja&appid=4b5774e9f3d2a07b84f0f2f88e486224";
-        console.log(requestUrl);
+        let requestUrl = WeatherMapApi + CityName + ApiLangJa + AppIdUrl;
         xhr.open('GET', requestUrl, true);
         xhr.send();
         //通信ステータスが変わったら実行される関数
