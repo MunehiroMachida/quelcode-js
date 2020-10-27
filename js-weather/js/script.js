@@ -1,16 +1,23 @@
 let xhr = new XMLHttpRequest();
 let AppId = '4b5774e9f3d2a07b84f0f2f88e486224';
 
-document.addEventListener('DOMContentLoaded', function () {
+const todaysWeather = (response) => {
+    let obj = JSON.parse(response);
+    let weather = obj.weather[0].description;
+    let city = obj.name;
+    document.getElementById('CityName').innerHTML = "現在の" + city + "の天気は" + weather;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
     //デフォルトロンドン
     let LondonUrl = "http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&lang=ja&appid=4b5774e9f3d2a07b84f0f2f88e486224";
     xhr.open('GET', LondonUrl, true);
     xhr.send();
     //通信ステータスが変わったら実行される関数
-    xhr.onreadystatechange = function () {
-        //通信が完了したらShowTodaysWeather関数を実行
+    xhr.onreadystatechange = () => {
+        //通信が完了したらShowtodaysWeather関数を実行
         if (xhr.readyState == 4) {
-            TodaysWeather(xhr.responseText);
+            todaysWeather(xhr.responseText);
         }
     }
     // id、weatherが変わったら↓
@@ -21,18 +28,11 @@ document.addEventListener('DOMContentLoaded', function () {
         xhr.open('GET', requestUrl, true);
         xhr.send();
         //通信ステータスが変わったら実行される関数
-        xhr.onreadystatechange = function () {
-            //通信が完了したらShowTodaysWeather関数を実行
+        xhr.onreadystatechange = () => {
+            //通信が完了したらShowtodaysWeather関数を実行
             if (xhr.readyState == 4) {
-                TodaysWeather(xhr.responseText);
+                todaysWeather(xhr.responseText);
             }
         }
     });
 });
-
-function TodaysWeather(response) {
-    let obj = JSON.parse(response);
-    let weather = obj.weather[0].description;
-    let city = obj.name;
-    document.getElementById('CityName').innerHTML = "現在の" + city + "の天気は" + weather;
-}
